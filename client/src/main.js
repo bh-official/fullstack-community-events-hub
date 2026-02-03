@@ -113,7 +113,7 @@ form.addEventListener("submit", async (e) => {
 
     // const editId = form.dataset.editId;
 
-  if (editingId) {
+  if (editingID) {
     // Update existing event
     await fetch(`${baseURL}/events/${editingId}`, {
       method: "PUT",
