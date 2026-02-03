@@ -107,14 +107,12 @@ async function loadEvents() {
 
       document.getElementById("event_name").value = event.event_name;
       document.getElementById("location").value = event.location;
-      // document.getElementById("event_date").value = event.event_date;
       document.getElementById("event_date").value = new Date(event.event_date).toISOString().split("T")[0];
       document.getElementById("start_time").value = event.start_time;
       document.getElementById("end_time").value = event.end_time;
       document.getElementById("description").value = event.description;
+      form.querySelector("button").textContent = "Update Event";
 
-      // storing the id
-      // form.dataset.editId = eventId;
     });
   });
   
@@ -149,7 +147,6 @@ form.addEventListener("submit", async (e) => {
     description: document.getElementById("description").value,
   };
 
-  // const editId = form.dataset.editId;
 
   if (editingID) {
     // Update existing event
@@ -160,7 +157,6 @@ form.addEventListener("submit", async (e) => {
     });
 
     editingID = null;
-    // delete form.dataset.editId; // clearing edit mode
   } else {
     // Creating new event
     await fetch(`${baseURL}/events`, {
@@ -170,7 +166,9 @@ form.addEventListener("submit", async (e) => {
     });
   }
   form.reset();
+  form.querySelector("button").textContent = "Enter the Event";
   loadEvents();
+
 });
 
 // Calling this each time when page loads
