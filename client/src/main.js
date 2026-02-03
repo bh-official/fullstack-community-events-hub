@@ -35,7 +35,7 @@ async function loadEvents() {
     btn.addEventListener("click", async (e) => {
       const eventId = e.target.dataset.id;
 
-      const res = await fetch(`http://localhost:3000/events/${eventId}/attend`, {
+     const res = await fetch(`${baseURL}/events/${eventId}/attend`, {
         method: "POST"
       });
 
