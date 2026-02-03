@@ -1,6 +1,6 @@
 * {
-  margin: 0px;
-  padding: 0px;
+ /* margin: 0px;
+  padding: 0px; */
   box-sizing: border-box;
 }
 
@@ -11,13 +11,17 @@ h1{
   margin-bottom: 1.2rem;
   color: #1f2937;
   letter-spacing: 0.5px;
+
+
+  /* Form container */
 }
 form {
   background: #76b9dd;
   padding: 1.2rem;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-
+  }
+  
 form label {
   display: block;
   margin-bottom: 0.25rem;
