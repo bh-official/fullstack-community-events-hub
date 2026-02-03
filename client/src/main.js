@@ -1,6 +1,6 @@
 const app = document.getElementById('app')
 const form = document.getElementById('form')
-const baseURL = "https://fullstack-community-events-hub-1.onrender.com";
+const baseURL = "http://localhost:4040";
 
 let editingID = null;
 // Load events when page opens
@@ -115,7 +115,7 @@ form.addEventListener("submit", async (e) => {
 
   if (editingID) {
     // Update existing event
-    await fetch(`${baseURL}/events/${editingId}`, {
+    await fetch(`${baseURL}/events/${editingID}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newEvent)
