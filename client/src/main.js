@@ -45,9 +45,8 @@ async function loadEvents() {
       document.getElementById(`status-${eventId}`).textContent = data.message;
     });
   });
-}
 
-// Edit button
+  // Edit button
 document.querySelectorAll(".edit-btn").forEach(btn => {
   btn.addEventListener("click", async (e) => {
     const eventId = e.target.dataset.id;
@@ -68,6 +67,9 @@ document.querySelectorAll(".edit-btn").forEach(btn => {
     form.dataset.editId = eventId;
   });
 });
+}
+
+
 
 
 
