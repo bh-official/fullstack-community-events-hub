@@ -27,7 +27,7 @@ async function loadEvents() {
 }
 
 
-function renderEvents(events, container) {
+function renderEvents(events, container, type) {
   container.innerHTML = "";
 
   events.forEach((event) => {
@@ -83,12 +83,16 @@ function renderEvents(events, container) {
       location,
       date,
       time,
-      description,
-      editBtn,
-      attendBtn,
-      deleteBtn,
-      status
+      description
     );
+
+    // Only show Edit + Attend for upcoming events
+    if (type === "upcoming") {
+      div.append(editBtn, attendBtn);
+    }
+
+    // Always allow delete (even for past)
+    div.append(deleteBtn, status);
 
     container.appendChild(div);
   });
