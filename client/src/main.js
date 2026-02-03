@@ -56,6 +56,7 @@ async function loadEvents() {
       description,
       editBtn,
       attendBtn,
+      deleteBtn,
       status,
     );
 
