@@ -74,6 +74,7 @@ async function loadEvents() {
   document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       const eventId = e.target.dataset.id;
+      console.log("EDIT CLICKED FOR:", eventId); 
       editingID = eventId;
 
       const response = await fetch(`${baseURL}/events`);

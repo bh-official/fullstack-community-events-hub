@@ -33,8 +33,8 @@ app.post("/events", async (req, res) => {
 
   await db.query(
     `INSERT INTO events 
-     (event_name, location, event_date, start_time, end_time, description, attending_users)
-     VALUES ($1,$2,$3,$4,$5,$6,'')`,
+    (event_name, location, event_date, start_time, end_time, description, attending_users)
+    VALUES ($1,$2,$3,$4,$5,$6,'')`,
     [event_name, location, event_date, start_time, end_time, description]
   );
 
@@ -75,8 +75,8 @@ app.put("/events/:id", async (req, res) => {
 
   await db.query(
     `UPDATE events 
-     SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
-     WHERE id=$7`,
+    SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
+    WHERE id=$7`,
     [event_name, location, event_date, start_time, end_time, description, eventId]
   );
 
