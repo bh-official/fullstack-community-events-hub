@@ -1,14 +1,34 @@
-const app = document.getElementById("app");
+const upcomingDiv = document.getElementById("upcoming");
+const pastDiv = document.getElementById("past");
+const statusPrefix = "status-";
+
+
 const form = document.getElementById("form");
 const baseURL = "https://fullstack-community-events-hub-server-iqu8.onrender.com";
 
 let editingID = null;
+
+
+
+
 // Load events when page opens
+
 async function loadEvents() {
   const response = await fetch(`${baseURL}/events`);
   const events = await response.json();
 
-  app.innerHTML = "";
+  const today = new Date().toISOString().split("T")[0];
+
+  const upcoming = events.filter(e => e.event_date >= today);
+  const past = events.filter(e => e.event_date < today);
+
+  renderEvents(upcoming, upcomingDiv);
+  renderEvents(past, pastDiv);
+}
+
+
+function renderEvents(events, container) {
+  container.innerHTML = "";
 
   events.forEach((event) => {
     const div = document.createElement("div");
@@ -16,6 +36,16 @@ async function loadEvents() {
 
     const title = document.createElement("h3");
     title.textContent = event.event_name;
+
+    const attendees = document.createElement("span");
+    attendees.classList.add("attendee-badge");
+
+    const attendingList = event.attending_users || "";
+    const count = attendingList
+      ? attendingList.split(",").map(s => s.trim()).filter(Boolean).length
+      : 0;
+
+    attendees.textContent = `👥 ${count} attending`;
 
     const location = document.createElement("p");
     location.textContent = event.location;
@@ -28,19 +58,6 @@ async function loadEvents() {
 
     const description = document.createElement("p");
     description.textContent = event.description || "";
-
-    const attendees = document.createElement("span");
-    attendees.classList.add("attendee-badge");
-
-    const attendingList = event.attending_users || "";
-    const count = attendingList
-      ? attendingList
-        .split(",")
-        .map(s => s.trim())   // remove spaces
-        .filter(s => s !== "").length
-      : 0;
-    attendees.textContent = `👥 ${count} attending`;
-
 
     const editBtn = document.createElement("button");
     editBtn.textContent = "Edit";
@@ -57,9 +74,8 @@ async function loadEvents() {
     deleteBtn.classList.add("delete-btn");
     deleteBtn.dataset.id = event.id;
 
-
     const status = document.createElement("p");
-    status.id = `status-${event.id}`;
+    status.id = `${statusPrefix}${event.id}`;
 
     div.append(
       title,
@@ -71,13 +87,17 @@ async function loadEvents() {
       editBtn,
       attendBtn,
       deleteBtn,
-      status,
+      status
     );
 
-    app.appendChild(div);
+    container.appendChild(div);
   });
 
-  // Attach click events AFTER rendering
+  attachEventListeners();
+}
+
+function attachEventListeners() {
+
   // Attend button
   document.querySelectorAll(".attend-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
@@ -86,9 +106,9 @@ async function loadEvents() {
       const res = await fetch(`${baseURL}/events/${eventId}/attend`, {
         method: "POST",
       });
-
       const data = await res.json();
-      document.getElementById(`status-${eventId}`).textContent = data.message;
+      document.getElementById(`${statusPrefix}${eventId}`).textContent = data.message;
+
       loadEvents(); 
     });
   });
@@ -97,42 +117,40 @@ async function loadEvents() {
   document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       const eventId = e.target.dataset.id;
-      console.log("EDIT CLICKED FOR:", eventId); 
       editingID = eventId;
 
       const response = await fetch(`${baseURL}/events`);
       const events = await response.json();
-
       const event = events.find((ev) => ev.id == eventId);
 
       document.getElementById("event_name").value = event.event_name;
       document.getElementById("location").value = event.location;
-      document.getElementById("event_date").value = new Date(event.event_date).toISOString().split("T")[0];
+      document.getElementById("event_date").value =
+        new Date(event.event_date).toISOString().split("T")[0];
       document.getElementById("start_time").value = event.start_time;
       document.getElementById("end_time").value = event.end_time;
       document.getElementById("description").value = event.description;
-      form.querySelector("button").textContent = "Update Event";
 
+      form.querySelector("button").textContent = "Update Event";
     });
   });
-  
+
   // Delete button
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       const eventId = e.target.dataset.id;
 
-      const confirmDelete = confirm("Are you sure you want to delete this event?");
-      if (!confirmDelete) return;
+      if (!confirm("Are you sure you want to delete this event?")) return;
 
       await fetch(`${baseURL}/events/${eventId}`, {
         method: "DELETE",
       });
 
-      loadEvents(); // refresh list after delete
+      loadEvents();
     });
   });
-
 }
+
 
 // Submit handler
 form.addEventListener("submit", async (e) => {
