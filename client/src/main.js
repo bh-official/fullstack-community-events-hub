@@ -1,6 +1,6 @@
 const app = document.getElementById('app')
 const form = document.getElementById('form')
-const baseURL = "https://fullstack-community-events-hub-server-iqu8.onrender.com";
+const baseURL = "https://fullstack-community-events-hub-1.onrender.com";
 
 let editingID = null;
 // Load events when page opens
