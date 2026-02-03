@@ -43,10 +43,6 @@ app.post("/events", async (req, res) => {
   res.status(200).json({ message: "Event added successfully" });
 });
 
-app.listen(4040, () => {
-  console.log("Server just started on http://localhost:4040");
-});
-
 // Mark attending (our button needs this)
 app.post("/events/:id/attend", async (req, res) => {
   const eventId = req.params.id;
@@ -91,5 +87,5 @@ app.put("/events/:id", async (req, res) => {
 
 
 app.listen(4040, () => {
-  console.log("Server running on http://localhost:4040");
+  console.log("Server just started on http://localhost:4040");
 });
