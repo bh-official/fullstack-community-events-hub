@@ -45,7 +45,10 @@ function renderEvents(events, container, type) {
       ? attendingList.split(",").map(s => s.trim()).filter(Boolean).length
       : 0;
 
-    attendees.textContent = `👥 ${count} attending`;
+    attendees.textContent =
+      type === "past"
+      ? `👥 ${count} attended`
+      : `👥 ${count} attending`;
 
     const location = document.createElement("p");
     location.textContent = event.location;
