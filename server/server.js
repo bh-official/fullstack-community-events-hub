@@ -78,7 +78,7 @@ app.put("/events/:id", async (req, res) => {
     const result = await db.query(
       `UPDATE events 
       SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
-      WHERE id=$7`,
+      WHERE id=$7 RETURNING *`,
       [event_name, location, event_date, start_time, end_time, description, eventId]
     );
     console.log("DB RESULT:", result.rows);

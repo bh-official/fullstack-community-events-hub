@@ -13,6 +13,7 @@ async function loadEvents() {
   events.forEach((event) => {
     const div = document.createElement("div");
     div.classList.add("event-card");
+    
     const title = document.createElement("h3");
     title.textContent = event.event_name;
 
