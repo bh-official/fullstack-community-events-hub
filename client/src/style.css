@@ -138,6 +138,12 @@ label {
   color: #7c2d12;
 }
 
+.event-card .attendees {
+  font-weight: 600;
+  color: #0d9488;
+}
+
+
 /* Mobile view */
 @media (max-width: 800px) {
   body {

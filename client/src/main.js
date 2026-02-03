@@ -29,6 +29,14 @@ async function loadEvents() {
     const description = document.createElement("p");
     description.textContent = event.description || "";
 
+    const attendees = document.createElement("p");
+    attendees.classList.add("attendees");
+
+    const attendingList = event.attending_users || "";
+    const count = attendingList ? attendingList.split(",").length : 0;
+    attendees.textContent = `👥 ${count} people attending`;
+
+
     const editBtn = document.createElement("button");
     editBtn.textContent = "Edit";
     editBtn.classList.add("edit-btn");
@@ -54,6 +62,7 @@ async function loadEvents() {
       date,
       time,
       description,
+      attendees,
       editBtn,
       attendBtn,
       deleteBtn,
@@ -75,6 +84,7 @@ async function loadEvents() {
 
       const data = await res.json();
       document.getElementById(`status-${eventId}`).textContent = data.message;
+      loadEvents(); 
     });
   });
 
