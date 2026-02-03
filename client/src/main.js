@@ -1,6 +1,6 @@
 const app = document.getElementById('app')
 const form = document.getElementById('form')
-const baseURL = "http://localhost:4040";
+const baseURL = "https://fullstack-community-events-hub-server.onrender.com";
 
 let editingID = null;
 // Load events when page opens
