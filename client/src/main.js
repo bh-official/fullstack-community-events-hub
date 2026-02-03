@@ -13,7 +13,7 @@ async function loadEvents() {
   events.forEach((event) => {
     const div = document.createElement("div");
     div.classList.add("event-card");
-    
+
     const title = document.createElement("h3");
     title.textContent = event.event_name;
 
@@ -85,7 +85,8 @@ async function loadEvents() {
 
       document.getElementById("event_name").value = event.event_name;
       document.getElementById("location").value = event.location;
-      document.getElementById("event_date").value = event.event_date;
+      // document.getElementById("event_date").value = event.event_date;
+      document.getElementById("event_date").value = new Date(event.event_date).toISOString().split("T")[0];
       document.getElementById("start_time").value = event.start_time;
       document.getElementById("end_time").value = event.end_time;
       document.getElementById("description").value = event.description;

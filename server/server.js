@@ -88,8 +88,7 @@ app.put("/events/:id", async (req, res) => {
     }
 
     res.json({ 
-      message: "Event updated successfully",
-      updatedEvent: result.rows[0],
+      message: "Event updated successfully", updatedEvent: result.rows[0]
     });
   } catch (err){
     console.error("PUT ERROR:", err);
