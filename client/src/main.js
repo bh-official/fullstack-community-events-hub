@@ -39,6 +39,12 @@ async function loadEvents() {
     attendBtn.classList.add("attend-btn");
     attendBtn.dataset.id = event.id;
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.dataset.id = event.id;
+
+
     const status = document.createElement("p");
     status.id = `status-${event.id}`;
 
@@ -95,6 +101,23 @@ async function loadEvents() {
       // form.dataset.editId = eventId;
     });
   });
+  
+  // Delete button
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const eventId = e.target.dataset.id;
+
+      const confirmDelete = confirm("Are you sure you want to delete this event?");
+      if (!confirmDelete) return;
+
+      await fetch(`${baseURL}/events/${eventId}`, {
+        method: "DELETE",
+      });
+
+      loadEvents(); // refresh list after delete
+    });
+  });
+
 }
 
 // Submit handler
