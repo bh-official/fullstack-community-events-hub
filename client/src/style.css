@@ -143,6 +143,18 @@ label {
   color: #0d9488;
 }
 
+.attendee-badge {
+  display: inline-block;
+  background: #fff7ed;      
+  color: #7c2d12;           
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+
 
 /* Mobile view */
 @media (max-width: 800px) {

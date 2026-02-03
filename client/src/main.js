@@ -29,12 +29,12 @@ async function loadEvents() {
     const description = document.createElement("p");
     description.textContent = event.description || "";
 
-    const attendees = document.createElement("p");
-    attendees.classList.add("attendees");
+    const attendees = document.createElement("span");
+    attendees.classList.add("attendee-badge");
 
     const attendingList = event.attending_users || "";
     const count = attendingList ? attendingList.split(",").length : 0;
-    attendees.textContent = `👥 ${count} people attending`;
+    attendees.textContent = `👥 ${count} attending`;
 
 
     const editBtn = document.createElement("button");
@@ -58,11 +58,11 @@ async function loadEvents() {
 
     div.append(
       title,
+      attendees,
       location,
       date,
       time,
       description,
-      attendees,
       editBtn,
       attendBtn,
       deleteBtn,
