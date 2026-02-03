@@ -26,6 +26,11 @@ h1 {
   letter-spacing: 0.5px;
 }
 
+h2 {
+  text-align:center; 
+  font-size:1rem;
+}
+
 /* Form styling */
 form {
   background: #ffffff;
@@ -153,6 +158,7 @@ label {
   font-weight: 600;
   margin-bottom: 6px;
 }
+
 
 
 
