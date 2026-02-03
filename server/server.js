@@ -69,18 +69,32 @@ app.post("/events/:id/attend", async (req, res) => {
 
 // Updating an event
 app.put("/events/:id", async (req, res) => {
-  const eventId = req.params.id;
-  const { event_name, location, event_date, start_time, end_time, description } =
+  try {
+    const eventId = Number(req.params.id);
+    console.log("UPDATING:", eventId, req.body); 
+    const { event_name, location, event_date, start_time, end_time, description } =
     req.body;
 
-  await db.query(
-    `UPDATE events 
-    SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
-    WHERE id=$7`,
-    [event_name, location, event_date, start_time, end_time, description, eventId]
-  );
+    const result = await db.query(
+      `UPDATE events 
+      SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
+      WHERE id=$7`,
+      [event_name, location, event_date, start_time, end_time, description, eventId]
+    );
+    console.log("DB RESULT:", result.rows);
 
-  res.json({ message: "Event updated successfully" });
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    res.json({ 
+      message: "Event updated successfully",
+      updatedEvent: result.rows[0],
+    });
+  } catch (err){
+    console.error("PUT ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 const PORT = process.env.PORT || 4040;
