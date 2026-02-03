@@ -19,26 +19,32 @@ app.get("/", (req, res) => {
   res.send("Hi there!");
 });
 
-
-// GET all events (our client needs this)
 app.get("/events", async (req, res) => {
-  const result = await db.query("SELECT * FROM events ORDER BY event_date");
-  res.json(result.rows);
+  const data = await db.query("SELECT * FROM events ORDER BY event_date");
+  //try out this line to see if it works to run events
+  const events = data.rows;
+  res.status(200).json(events);
 });
 
-// POST new event (our form needs this)
 app.post("/events", async (req, res) => {
-  const { event_name, location, event_date, start_time, end_time, description } =
-    req.body;
-
-  await db.query(
-    `INSERT INTO events 
-     (event_name, location, event_date, start_time, end_time, description, attending_users)
-     VALUES ($1,$2,$3,$4,$5,$6,'')`,
-    [event_name, location, event_date, start_time, end_time, description]
+  const userData = req.body;
+  const dbQuery = await db.query(
+    `INSERT INTO events (event_name, location, event_date, start_time, end_time, description, attending_users) VALUES ($1, $2, $3, $4, $5, $6, '')`,
+    [
+      userData.event_name,
+      userData.location,
+      userData.event_date,
+      userData.start_time,
+      userData.end_time,
+      userData.description,
+      userData.attending_users,
+    ],
   );
+  res.status(200).json({ message: "Event added successfully" });
+});
 
-  res.json({ message: "Event added successfully" });
+app.listen(4040, () => {
+  console.log("Server just started on http://localhost:4040");
 });
 
 // Mark attending (our button needs this)
