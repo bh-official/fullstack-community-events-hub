@@ -1,6 +1,6 @@
-const app = document.getElementById('app')
-const form = document.getElementById('form')
-const baseURL = "http://localhost:4040";
+const app = document.getElementById("app");
+const form = document.getElementById("form");
+const baseURL = "https://fullstack-community-events-hub.onrender.com";
 
 let editingID = null;
 // Load events when page opens
@@ -49,7 +49,7 @@ async function loadEvents() {
       description,
       editBtn,
       attendBtn,
-      status
+      status,
     );
 
     app.appendChild(div);
@@ -57,12 +57,12 @@ async function loadEvents() {
 
   // Attach click events AFTER rendering
   // Attend button
-  document.querySelectorAll(".attend-btn").forEach(btn => {
+  document.querySelectorAll(".attend-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       const eventId = e.target.dataset.id;
 
-     const res = await fetch(`${baseURL}/events/${eventId}/attend`, {
-        method: "POST"
+      const res = await fetch(`${baseURL}/events/${eventId}/attend`, {
+        method: "POST",
       });
 
       const data = await res.json();
@@ -71,32 +71,28 @@ async function loadEvents() {
   });
 
   // Edit button
-document.querySelectorAll(".edit-btn").forEach(btn => {
-  btn.addEventListener("click", async (e) => {
-    const eventId = e.target.dataset.id;
-    editingID = eventId;
+  document.querySelectorAll(".edit-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const eventId = e.target.dataset.id;
+      editingID = eventId;
 
-    const response = await fetch(`${baseURL}/events`);
-    const events = await response.json();
+      const response = await fetch(`${baseURL}/events`);
+      const events = await response.json();
 
-    const event = events.find(ev => ev.id == eventId);
+      const event = events.find((ev) => ev.id == eventId);
 
-    document.getElementById("event_name").value = event.event_name;
-    document.getElementById("location").value = event.location;
-    document.getElementById("event_date").value = event.event_date;
-    document.getElementById("start_time").value = event.start_time;
-    document.getElementById("end_time").value = event.end_time;
-    document.getElementById("description").value = event.description;
+      document.getElementById("event_name").value = event.event_name;
+      document.getElementById("location").value = event.location;
+      document.getElementById("event_date").value = event.event_date;
+      document.getElementById("start_time").value = event.start_time;
+      document.getElementById("end_time").value = event.end_time;
+      document.getElementById("description").value = event.description;
 
-    // storing the id 
-    // form.dataset.editId = eventId;
+      // storing the id
+      // form.dataset.editId = eventId;
+    });
   });
-});
 }
-
-
-
-
 
 // Submit handler
 form.addEventListener("submit", async (e) => {
@@ -108,27 +104,27 @@ form.addEventListener("submit", async (e) => {
     event_date: document.getElementById("event_date").value,
     start_time: document.getElementById("start_time").value,
     end_time: document.getElementById("end_time").value,
-    description: document.getElementById("description").value
+    description: document.getElementById("description").value,
   };
 
-    // const editId = form.dataset.editId;
+  // const editId = form.dataset.editId;
 
   if (editingID) {
     // Update existing event
     await fetch(`${baseURL}/events/${editingID}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newEvent)
+      body: JSON.stringify(newEvent),
     });
 
-      editingID = null;
+    editingID = null;
     // delete form.dataset.editId; // clearing edit mode
   } else {
     // Creating new event
     await fetch(`${baseURL}/events`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newEvent)
+      body: JSON.stringify(newEvent),
     });
   }
   form.reset();
