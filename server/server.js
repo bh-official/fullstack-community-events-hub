@@ -44,7 +44,8 @@ app.post("/events", async (req, res) => {
 // Mark attending (our button needs this)
 app.post("/events/:id/attend", async (req, res) => {
   const eventId = req.params.id;
-  const userId = "99"; 
+  const userId = Date.now().toString();
+ 
 
   const check = await db.query(
     "SELECT attending_users FROM events WHERE id = $1",
