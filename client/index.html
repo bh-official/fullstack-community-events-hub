@@ -11,26 +11,43 @@
   <body>
     <h1>Community Events Hub</h1>
     <form id="form">
+      <label for="event_name">Enter event name</label>
       <input
         id="event_name"
         type="text"
         name="event_name"
-        placeholder="Enter event name"
+        placeholder="Enter"
       />
+
       <label for="location">Location</label>
-      <input id="location" type="text" name="location" />
+      <input id="location" type="text" name="location" placeholder="location" />
 
       <label for="event_date">Event Date</label>
-      <input id="event_date" type="date" name="event_date" />
+      <input
+        id="event_date"
+        type="date"
+        name="event_date"
+        placeholder="Event Date"
+      />
 
       <label for="start_time">Start Time</label>
-      <input id="start_time" type="date" name="start_time" />
+      <input
+        id="start_time"
+        type="date"
+        name="start_time"
+        placeholder="Star time"
+      />
 
       <label for="event_date">End Date</label>
-      <input id="end_time" type="time" name="end_time" />
+      <input id="end_time" type="time" name="end_time" placeholder="End Time" />
 
       <label for="description">Description</label>
-      <textarea id="description" name="description"></textarea>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Enter event description"
+      ></textarea>
+
       <button type="submit">Enter the Events</button>
     </form>
     <div id="app"></div>
