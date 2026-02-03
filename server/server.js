@@ -1,19 +1,22 @@
 import express from "express";
 import cors from "cors";
-import pg from "pg"
-import dotenv from "dotenv"
+import pg from "pg";
+import dotenv from "dotenv";
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+app.use(cors());
+dotenv.config();
 
-app.get("/", (req, res) => {
-  res.send("Server is running 🚀");
+const db = new pg.Pool({
+  connectionString: process.env.DB_CONN,
 });
 
-const PORT = process.env.PORT || 3000;
+app.get("/", (req, res) => {
+  res.send("Hi there!");
+});
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(4040, () => {
+  console.log("Server just started on https://localhost:4040");
 });
