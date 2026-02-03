@@ -33,7 +33,12 @@ async function loadEvents() {
     attendees.classList.add("attendee-badge");
 
     const attendingList = event.attending_users || "";
-    const count = attendingList ? attendingList.split(",").length : 0;
+    const count = attendingList
+  ? attendingList
+      .split(",")
+      .map(s => s.trim())   // remove spaces
+      .filter(s => s !== "").length
+    : 0;
     attendees.textContent = `👥 ${count} attending`;
 
 
