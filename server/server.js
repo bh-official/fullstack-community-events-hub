@@ -84,6 +84,6 @@ app.put("/events/:id", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4040;
-app.listen(4040, () => {
-  console.log("Server running on http://localhost:4040");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
