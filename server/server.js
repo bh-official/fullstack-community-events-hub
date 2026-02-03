@@ -37,8 +37,8 @@ app.post("/events", async (req, res) => {
   } = req.body;
 
   await db.query(
-    `INSERT INTO events
-     (event_name, location, event_date, start_time, end_time, description, attending_users),
+    `INSERT INTO events 
+     (event_name, location, event_date, start_time, end_time, description, attending_users)
      VALUES ($1,$2,$3,$4,$5,$6,'')`,
     [event_name, location, event_date, start_time, end_time, description],
   );
@@ -49,7 +49,7 @@ app.post("/events", async (req, res) => {
 // Mark attending (our button needs this)
 app.post("/events/:id/attend", async (req, res) => {
   const eventId = req.params.id;
-  const userId = "99"; // later replace with real user login
+  const userId = "99";
 
   const check = await db.query(
     "SELECT attending_users FROM events WHERE id = $1",
@@ -68,6 +68,36 @@ app.post("/events/:id/attend", async (req, res) => {
   }
 
   res.json({ message: "You're marked as attending! 🎉" });
+});
+
+// Updating an event
+app.put("/events/:id", async (req, res) => {
+  const eventId = req.params.id;
+  const {
+    event_name,
+    location,
+    event_date,
+    start_time,
+    end_time,
+    description,
+  } = req.body;
+
+  await db.query(
+    `UPDATE events 
+     SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
+     WHERE id=$7`,
+    [
+      event_name,
+      location,
+      event_date,
+      start_time,
+      end_time,
+      description,
+      eventId,
+    ],
+  );
+
+  res.json({ message: "Event updated successfully" });
 });
 
 app.listen(4040, () => {
