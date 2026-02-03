@@ -20,6 +20,7 @@ async function loadEvents() {
       <p><strong>📅</strong> ${event.event_date}</p>
       <p><strong>⏰</strong> ${event.start_time} - ${event.end_time}</p>
       <p>${event.description || ""}</p>
+      <button class="edit-btn" data-id="${event.id}">Edit</button>
       <button class="attend-btn" data-id="${event.id}">
         I'm Attending
       </button>
@@ -31,6 +32,7 @@ async function loadEvents() {
   });
 
   // Attach click events AFTER rendering
+  // Attend button
   document.querySelectorAll(".attend-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const eventId = e.target.dataset.id;
@@ -45,8 +47,31 @@ async function loadEvents() {
   });
 }
 
+// Edit button
+document.querySelectorAll(".edit-btn").forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    const eventId = e.target.dataset.id;
 
-// Handle form submission
+    const response = await fetch(`${baseURL}/events`);
+    const events = await response.json();
+
+    const event = events.find(ev => ev.id == eventId);
+
+    document.getElementById("event_name").value = event.event_name;
+    document.getElementById("location").value = event.location;
+    document.getElementById("event_date").value = event.event_date;
+    document.getElementById("start_time").value = event.start_time;
+    document.getElementById("end_time").value = event.end_time;
+    document.getElementById("description").value = event.description;
+
+    // storing the id 
+    form.dataset.editId = eventId;
+  });
+});
+
+
+
+// Submit handler
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -59,15 +84,28 @@ form.addEventListener("submit", async (e) => {
     description: document.getElementById("description").value
   };
 
-  await fetch(`${baseURL}/events`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newEvent)
-  });
+    const editId = form.dataset.editId;
 
+  if (editId) {
+    // Update existing event
+    await fetch(`${baseURL}/events/${editId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newEvent)
+    });
+
+    delete form.dataset.editId; // clearing edit mode
+  } else {
+    // Creating new event
+    await fetch(`${baseURL}/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newEvent)
+    });
+  }
   form.reset();
   loadEvents();
 });
 
-// Call this when page loads
+// Calling this each time when page loads
 loadEvents();

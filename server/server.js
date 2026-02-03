@@ -67,6 +67,23 @@ app.post("/events/:id/attend", async (req, res) => {
   res.json({ message: "You're marked as attending! 🎉" });
 });
 
+// Updating an event
+app.put("/events/:id", async (req, res) => {
+  const eventId = req.params.id;
+  const { event_name, location, event_date, start_time, end_time, description } =
+    req.body;
+
+  await db.query(
+    `UPDATE events 
+     SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
+     WHERE id=$7`,
+    [event_name, location, event_date, start_time, end_time, description, eventId]
+  );
+
+  res.json({ message: "Event updated successfully" });
+});
+
+
 app.listen(4040, () => {
   console.log("Server running on http://localhost:4040");
 });
