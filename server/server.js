@@ -10,14 +10,15 @@ app.use(cors());
 dotenv.config();
 
 const db = new pg.Pool({
-  connectionString: process.env.DB_CONN,
-  ssl: { rejectUnauthorized: false },
+  connectionString: process.env.DB_CONN, 
+  ssl: { rejectUnauthorized: false }
 });
 
 // Testing from route
 app.get("/", (req, res) => {
   res.send("Hi there!");
 });
+
 
 // GET all events (our client needs this)
 app.get("/events", async (req, res) => {
@@ -27,20 +28,14 @@ app.get("/events", async (req, res) => {
 
 // POST new event (our form needs this)
 app.post("/events", async (req, res) => {
-  const {
-    event_name,
-    location,
-    event_date,
-    start_time,
-    end_time,
-    description,
-  } = req.body;
+  const { event_name, location, event_date, start_time, end_time, description } =
+    req.body;
 
   await db.query(
     `INSERT INTO events 
-     (event_name, location, event_date, start_time, end_time, description, attending_users)
-     VALUES ($1,$2,$3,$4,$5,$6,'')`,
-    [event_name, location, event_date, start_time, end_time, description],
+    (event_name, location, event_date, start_time, end_time, description, attending_users)
+    VALUES ($1,$2,$3,$4,$5,$6,'')`,
+    [event_name, location, event_date, start_time, end_time, description]
   );
 
   res.json({ message: "Event added successfully" });
@@ -49,22 +44,25 @@ app.post("/events", async (req, res) => {
 // Mark attending (our button needs this)
 app.post("/events/:id/attend", async (req, res) => {
   const eventId = req.params.id;
-  const userId = "99";
+  const userId = Date.now().toString();
+ 
 
   const check = await db.query(
     "SELECT attending_users FROM events WHERE id = $1",
-    [eventId],
+    [eventId]
   );
 
   let attending = check.rows[0].attending_users || "";
 
   if (!attending.includes(userId)) {
-    attending = attending ? attending + "," + userId : userId;
+    attending = attending
+      ? attending + "," + userId
+      : userId;
 
-    await db.query("UPDATE events SET attending_users = $1 WHERE id = $2", [
-      attending,
-      eventId,
-    ]);
+    await db.query(
+      "UPDATE events SET attending_users = $1 WHERE id = $2",
+      [attending, eventId]
+    );
   }
 
   res.json({ message: "You're marked as attending! 🎉" });
@@ -72,34 +70,56 @@ app.post("/events/:id/attend", async (req, res) => {
 
 // Updating an event
 app.put("/events/:id", async (req, res) => {
-  const eventId = req.params.id;
-  const {
-    event_name,
-    location,
-    event_date,
-    start_time,
-    end_time,
-    description,
-  } = req.body;
+  try {
+    const eventId = Number(req.params.id);
+    console.log("UPDATING:", eventId, req.body); 
+    const { event_name, location, event_date, start_time, end_time, description } =
+    req.body;
 
-  await db.query(
-    `UPDATE events 
-     SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
-     WHERE id=$7`,
-    [
-      event_name,
-      location,
-      event_date,
-      start_time,
-      end_time,
-      description,
-      eventId,
-    ],
-  );
+    const result = await db.query(
+      `UPDATE events 
+      SET event_name=$1, location=$2, event_date=$3, start_time=$4, end_time=$5, description=$6
+      WHERE id=$7 RETURNING *`,
+      [event_name, location, event_date, start_time, end_time, description, eventId]
+    );
+    console.log("DB RESULT:", result.rows);
 
-  res.json({ message: "Event updated successfully" });
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    res.json({ 
+      message: "Event updated successfully", updatedEvent: result.rows[0]
+    });
+  } catch (err){
+    console.error("PUT ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
-app.listen(4040, () => {
-  console.log("Server running on http://localhost:4040");
+// Deleting an event
+app.delete("/events/:id", async (req, res) => {
+  try {
+    const eventId = Number(req.params.id);
+
+    const result = await db.query(
+      "DELETE FROM events WHERE id = $1 RETURNING *",
+      [eventId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    res.json({ message: "Event deleted successfully" });
+  } catch (err) {
+    console.error("DELETE ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+const PORT = process.env.PORT || 4040;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
