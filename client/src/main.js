@@ -1,29 +1,73 @@
-const app = document.getElementById("app");
+const upcomingDiv = document.getElementById("upcoming");
+const pastDiv = document.getElementById("past");
+const statusPrefix = "status-";
+
+
 const form = document.getElementById("form");
-const baseURL = "https://fullstack-community-events-hub.onrender.com";
+const baseURL = "https://fullstack-community-events-hub-server.onrender.com";
 
 let editingID = null;
+
+
+
+
 // Load events when page opens
+
 async function loadEvents() {
   const response = await fetch(`${baseURL}/events`);
   const events = await response.json();
 
-  app.innerHTML = "";
+  const today = new Date().toISOString().split("T")[0];
+
+  const upcoming = events.filter(e => e.event_date >= today);
+  const past = events.filter(e => e.event_date < today);
+
+  renderEvents(upcoming, upcomingDiv, "upcoming");
+  renderEvents(past, pastDiv, "past");
+}
+
+
+function renderEvents(events, container, type) {
+  container.innerHTML = "";
 
   events.forEach((event) => {
     const div = document.createElement("div");
     div.classList.add("event-card");
+
     const title = document.createElement("h3");
     title.textContent = event.event_name;
+
+    const attendees = document.createElement("span");
+    attendees.classList.add("attendee-badge");
+
+    const attendingList = event.attending_users || "";
+    const count = attendingList
+      ? attendingList.split(",").map(s => s.trim()).filter(Boolean).length
+      : 0;
+
+    attendees.textContent =
+      type === "past"
+      ? `👥 ${count} attended`
+      : `👥 ${count} attending`;
 
     const location = document.createElement("p");
     location.textContent = event.location;
 
     const date = document.createElement("p");
-    date.textContent = event.event_date;
+    const formattedDate = new Date(event.event_date).toLocaleDateString("en-GB", {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+    date.textContent = formattedDate;
 
     const time = document.createElement("p");
-    time.textContent = `${event.start_time} - ${event.end_time}`;
+    const formatTime = (t) => {
+      return t.slice(0, 5);   // keeps only HH:MM and removes :SS
+    };
+
+    time.textContent = `${formatTime(event.start_time)} - ${formatTime(event.end_time)}`;
 
     const description = document.createElement("p");
     description.textContent = event.description || "";
@@ -38,24 +82,39 @@ async function loadEvents() {
     attendBtn.classList.add("attend-btn");
     attendBtn.dataset.id = event.id;
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.dataset.id = event.id;
+
     const status = document.createElement("p");
-    status.id = `status-${event.id}`;
+    status.id = `${statusPrefix}${event.id}`;
 
     div.append(
       title,
+      attendees,
       location,
       date,
       time,
-      description,
-      editBtn,
-      attendBtn,
-      status,
+      description
     );
 
-    app.appendChild(div);
+    // Only show Edit + Attend for upcoming events
+    if (type === "upcoming") {
+      div.append(editBtn, attendBtn);
+    }
+
+    // Always allow delete (even for past)
+    div.append(deleteBtn, status);
+
+    container.appendChild(div);
   });
 
-  // Attach click events AFTER rendering
+  attachEventListeners();
+}
+
+function attachEventListeners() {
+
   // Attend button
   document.querySelectorAll(".attend-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
@@ -64,9 +123,10 @@ async function loadEvents() {
       const res = await fetch(`${baseURL}/events/${eventId}/attend`, {
         method: "POST",
       });
-
       const data = await res.json();
-      document.getElementById(`status-${eventId}`).textContent = data.message;
+      document.getElementById(`${statusPrefix}${eventId}`).textContent = data.message;
+
+      loadEvents(); 
     });
   });
 
@@ -78,21 +138,36 @@ async function loadEvents() {
 
       const response = await fetch(`${baseURL}/events`);
       const events = await response.json();
-
       const event = events.find((ev) => ev.id == eventId);
 
       document.getElementById("event_name").value = event.event_name;
       document.getElementById("location").value = event.location;
-      document.getElementById("event_date").value = event.event_date;
+      document.getElementById("event_date").value =
+        new Date(event.event_date).toISOString().split("T")[0];
       document.getElementById("start_time").value = event.start_time;
       document.getElementById("end_time").value = event.end_time;
       document.getElementById("description").value = event.description;
 
-      // storing the id
-      // form.dataset.editId = eventId;
+      form.querySelector("button").textContent = "Update Event";
+    });
+  });
+
+  // Delete button
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const eventId = e.target.dataset.id;
+
+      if (!confirm("Are you sure you want to delete this event?")) return;
+
+      await fetch(`${baseURL}/events/${eventId}`, {
+        method: "DELETE",
+      });
+
+      loadEvents();
     });
   });
 }
+
 
 // Submit handler
 form.addEventListener("submit", async (e) => {
@@ -107,7 +182,6 @@ form.addEventListener("submit", async (e) => {
     description: document.getElementById("description").value,
   };
 
-  // const editId = form.dataset.editId;
 
   if (editingID) {
     // Update existing event
@@ -118,7 +192,6 @@ form.addEventListener("submit", async (e) => {
     });
 
     editingID = null;
-    // delete form.dataset.editId; // clearing edit mode
   } else {
     // Creating new event
     await fetch(`${baseURL}/events`, {
@@ -128,7 +201,9 @@ form.addEventListener("submit", async (e) => {
     });
   }
   form.reset();
+  form.querySelector("button").textContent = "Enter the Event";
   loadEvents();
+
 });
 
 // Calling this each time when page loads
