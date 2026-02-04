@@ -2,12 +2,70 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/x-icon" href="img/community.png" />
+    <script type="module" src="/src/main.js" defer></script>
+    <link rel="stylesheet" href="/src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>client</title>
+    <title>Community Events Hub</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <h1>Community Events Hub</h1>
+    <h2>Create, join, and manage community events</h2>
+
+    <form id="form">
+      <label for="event_name">Event Name</label>
+      <input 
+        id="event_name" 
+        name="event_name" 
+        type="text"
+        placeholder="e.g. Community Tech Meetup"
+      />
+
+      <label for="location">Location</label>
+      <input 
+        id="location" 
+        name="location" 
+        type="text"
+        placeholder="e.g. British Library, London"
+      />
+
+      <label for="event_date">Event Date</label>
+      <input 
+        id="event_date" 
+        name="event_date" 
+        type="date"
+      />
+
+      <label for="start_time">Start Time</label>
+      <input 
+        id="start_time" 
+        name="start_time" 
+        type="time"
+      />
+
+      <label for="end_time">End Time</label>
+      <input 
+        id="end_time" 
+        name="end_time" 
+        type="time"
+      />
+
+      <label for="description">Description</label>
+      <textarea 
+        id="description" 
+        name="description"
+        placeholder="e.g. Evening of tech talks, networking, and snacks. Everyone is welcome!"
+      ></textarea>
+
+      <button type="submit">Enter the Event</button>
+    </form>
+
+
+    <h2>Upcoming Events</h2>
+    <div id="upcoming"></div>
+
+    <h2>Past Events</h2>
+    <div id="past"></div>
+
   </body>
 </html>

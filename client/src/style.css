@@ -1,0 +1,239 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, Arial, sans-serif;
+  background-color:#fff6e5;      
+  color: #2b2b2b;
+  margin: 0;
+  padding: 1rem;
+}
+
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  color: #7c2d12;               
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+h2 {
+  text-align:center; 
+  font-size:1rem;
+}
+
+/* Form styling */
+form {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border: 1px solid #fde68a;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fffbea;
+}
+
+form textarea {
+  height: 140px;
+  resize: none;      
+  overflow-y: scroll;  
+  line-height: 1.4;
+}
+
+form button {
+  width: 100%;
+  padding: 0.6rem;
+  background: #7c2d12;           
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+form button:hover {
+  background: #5f1f0a;
+}
+
+/* Event card */
+.event-card {
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-left: 6px solid #fbbf24;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+}
+
+/* text inside event */
+.event-card h3 {
+  margin-top: 0;
+  color: #7c2d12;
+}
+
+.event-card p {
+  margin: 0.3rem 0;
+  color: #44403c;
+}
+
+/* Buttons */
+.event-card button {
+  margin-right: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Button colours */
+.edit-btn {
+  background: #0d9488;           /* amber */
+  color: white;
+}
+
+.attend-btn {
+  background: #7c3aed;           /* green */
+  color: white;
+}
+
+.delete-btn {
+  background: #dc2626;           /* red */
+  color: white;
+}
+
+/* Status message */
+[id^="status-"] {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #065f46;                /* dark green */
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #7c2d12;
+}
+
+.event-card .attendees {
+  font-weight: 600;
+  color: #0d9488;
+}
+
+.attendee-badge {
+  display: inline-block;
+  background: #fff7ed;      
+  color: #7c2d12;           
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+#upcoming,
+#past {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#upcoming .event-card,
+#past .event-card {
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 2px solid #e2e8f0;   
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Remove line after last card */
+#upcoming .event-card:last-child,
+#past .event-card:last-child {
+  border-bottom: none;
+}
+
+
+
+
+
+/* Mobile view */
+@media (max-width: 800px) {
+  body {
+    background-color: #1c1917;   /* very dark navy */
+    color: #fafaf9;
+    padding: 0.5rem;
+  }
+
+    /* Keep upcoming & past the SAME width as the form on mobile */
+  #upcoming,
+  #past {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Make event cards match the form width on mobile */
+  #upcoming .event-card,
+  #past .event-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    color: #fde68a;              /* soft light blue */
+  }
+
+  .event-card {
+    background-color: #292524;
+    border-left: 6px solid #f59e0b;
+  }
+
+  .event-card p {
+    color: #e7e5e4;
+  }
+
+  form {
+    background-color: #292524;
+    border: 1px solid #f59e0b;
+  }
+
+  form input,
+  form textarea {
+    background: #1c1917;
+    color: #e7e5e4;
+    border-color: #f59e0b;
+  }
+
+  label {
+    color: #fde68a;
+  }
+}
