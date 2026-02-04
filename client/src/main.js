@@ -63,7 +63,11 @@ function renderEvents(events, container, type) {
     date.textContent = formattedDate;
 
     const time = document.createElement("p");
-    time.textContent = `${event.start_time} - ${event.end_time}`;
+    const formatTime = (t) => {
+      return t.slice(0, 5);   // keeps only HH:MM and removes :SS
+    };
+
+    time.textContent = `${formatTime(event.start_time)} - ${formatTime(event.end_time)}`;
 
     const description = document.createElement("p");
     description.textContent = event.description || "";
