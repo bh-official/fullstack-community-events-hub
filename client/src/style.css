@@ -159,6 +159,18 @@ label {
   margin-bottom: 6px;
 }
 
+#upcoming .event-card,
+#past .event-card {
+  border-bottom: 2px solid #e2e8f0;   
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Remove line after last card */
+#upcoming .event-card:last-child,
+#past .event-card:last-child {
+  border-bottom: none;
+}
 
 
 
