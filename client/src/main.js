@@ -22,7 +22,7 @@ async function loadEvents() {
   const upcoming = events.filter(e => e.event_date >= today);
   const past = events.filter(e => e.event_date < today);
 
-  renderEvents(upcoming, upcomingDiv);
+  renderEvents(upcoming, upcomingDiv, "upcoming");
   renderEvents(past, pastDiv, "past");
 }
 
