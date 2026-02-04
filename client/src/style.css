@@ -159,8 +159,17 @@ label {
   margin-bottom: 6px;
 }
 
+#upcoming,
+#past {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #upcoming .event-card,
 #past .event-card {
+  width: 100%;
+  box-sizing: border-box;
   border-bottom: 2px solid #e2e8f0;   
   padding-bottom: 1rem;
   margin-bottom: 1rem;
@@ -182,6 +191,21 @@ label {
     background-color: #1c1917;   /* very dark navy */
     color: #fafaf9;
     padding: 0.5rem;
+  }
+
+    /* Keep upcoming & past the SAME width as the form on mobile */
+  #upcoming,
+  #past {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Make event cards match the form width on mobile */
+  #upcoming .event-card,
+  #past .event-card {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   h1 {
