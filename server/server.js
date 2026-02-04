@@ -45,7 +45,6 @@ app.post("/events", async (req, res) => {
 app.post("/events/:id/attend", async (req, res) => {
   const eventId = req.params.id;
   const userId = Date.now().toString();
- 
 
   const check = await db.query(
     "SELECT attending_users FROM events WHERE id = $1",
