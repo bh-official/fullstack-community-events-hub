@@ -54,7 +54,13 @@ function renderEvents(events, container, type) {
     location.textContent = event.location;
 
     const date = document.createElement("p");
-    date.textContent = event.event_date;
+    const formattedDate = new Date(event.event_date).toLocaleDateString("en-GB", {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+    date.textContent = formattedDate;
 
     const time = document.createElement("p");
     time.textContent = `${event.start_time} - ${event.end_time}`;
