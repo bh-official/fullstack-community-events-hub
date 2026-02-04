@@ -100,43 +100,7 @@ We organised tasks into:
 
 ## 9. Project Structure
 
-FULLSTACK-COMMUNITY-EVENTS-HUB/
-│
-├── client/
-│   ├── img/
-│   ├── node_modules/
-│   ├── public/
-│   ├── src/
-│   │   ├── main.js
-│   │   └── style.css
-│   ├── .gitignore
-│   ├── index.html
-│   ├── package-lock.json
-│   └── package.json
-│
-├── screenshots/
-│   ├── add-events-mobileversion-2.png
-│   ├── add-events-mobileversion.png
-│   ├── Add-events-webversion.png
-│   ├── dummy-seed-data.png
-│   ├── past-events-mobileversion.png
-│   ├── past-events-web-version.png
-│   ├── schema-visualizer.png
-│   ├── sql-query.png
-│   ├── table.png
-│   ├── upcoming-events-mobileversion.png
-│   └── upcoming-events-webversion.png
-│
-├── server/
-│   ├── node_modules/
-│   ├── .env
-│   ├── package-lock.json
-│   ├── package.json
-│   └── server.js
-│
-├── .gitignore
-├── README.md
-└── SQL.sql
+![Project Structure](screenshots/project-structure.png) 
 
 ---
 
