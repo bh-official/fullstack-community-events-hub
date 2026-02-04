@@ -4,7 +4,7 @@ const statusPrefix = "status-";
 
 
 const form = document.getElementById("form");
-const baseURL = "https://fullstack-community-events-hub-server-iqu8.onrender.com";
+const baseURL = "https://fullstack-community-events-hub-server.onrender.com";
 
 let editingID = null;
 
