@@ -172,7 +172,6 @@ FULLSTACK-COMMUNITY-EVENTS-HUB/
 - Users can mark attendance for **upcoming events only**.  
 - Clicking **“I’m Attending”** sends a `POST /events/:id/attend` request.  
 - The attendee badge updates automatically to show the new count.  
-- Duplicate attendance is prevented by the backend.  
 
 ### Past vs Upcoming Events  
 - Upcoming events show: **Edit + Attend + Delete buttons**.  
@@ -206,7 +205,7 @@ FULLSTACK-COMMUNITY-EVENTS-HUB/
 
 #### Health Check  
 - `GET /`  
-- Confirms the server is running by returning:  
+- Confirms the server is running by returning:  Hi, there!
 
 ---  
 
@@ -310,8 +309,8 @@ CREATE TABLE events (
 
 2. Navigate to the server folder  
 
-cd server
-npm install pg, express, dotenv, cors
+  cd server
+  npm install pg, express, dotenv, cors
 
 3. Create server.js and .env file with your Supabase connection string
 
@@ -319,18 +318,20 @@ npm install pg, express, dotenv, cors
 
 5. Navigate to the client folder
 
-cd client
-npm install
+  cd client
+  npm install
 
 6. Navigate to the main folder
 create .gitignore
+
+7. To run use `npm run dev` for both client and server
 
 ---
 
 ## 19. Deployment  
 
-🔗 **GitHub Repository:**  
-https://github.com/bh-official/fullstack-community-events-hub
+- GitHub Repository link **To View Files**
+🔗 **GitHub Repository:** https://github.com/bh-official/fullstack-community-events-hub
 
 - Server deployed on **Render Web Service**  
 🔗 **Live Server URL:** https://fullstack-community-events-hub-server.onrender.com  
