@@ -331,12 +331,15 @@ create .gitignore
 ## 19. Deployment  
 
 - GitHub Repository link **To View Files**
+
 🔗 **GitHub Repository:** https://github.com/bh-official/fullstack-community-events-hub
 
 - Server deployed on **Render Web Service**  
+
 🔗 **Live Server URL:** https://fullstack-community-events-hub-server.onrender.com  
 
 - Client deployed as **Render Static Site**  
+
 🔗 **Live Client URL:** https://fullstack-community-events-hub-client.onrender.com  
 
 ---
