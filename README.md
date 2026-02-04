@@ -89,12 +89,8 @@ The front end dynamically fetches and displays events, separating them into **Up
 ## 8. Trello (Project Management)  
 
 Suggested format:  
-![Trello Board](screenshots/trello.png)  
-
-We organised tasks into:  
-- To Do  
-- In Progress  
-- Done  
+![Trello Board](screenshots/trello1.png)  
+![Trello Board](screenshots/trello2.png) 
 
 ---
 
