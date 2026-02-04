@@ -268,8 +268,8 @@ CREATE TABLE events (
 
 2. Navigate to the server folder  
 
-  cd server
-  npm install pg, express, dotenv, cors
+- cd server
+- npm install pg, express, dotenv, cors
 
 3. Create server.js and .env file with your Supabase connection string
 
@@ -277,8 +277,8 @@ CREATE TABLE events (
 
 5. Navigate to the client folder
 
-  cd client
-  npm install
+- cd client
+- npm install
 
 6. Navigate to the main folder
 create .gitignore
