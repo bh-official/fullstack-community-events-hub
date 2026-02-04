@@ -69,7 +69,7 @@ The front end dynamically fetches and displays events, separating them into **Up
 
 ## 7. Wireframe  
 
-![Wireframe](screenshot/wireframe.png)  
+![Wireframe](screenshots/wireframe.png)  
 
 ### Layout description  
 - A form at the top for adding and editing events  
@@ -88,23 +88,13 @@ The front end dynamically fetches and displays events, separating them into **Up
 
 ## 8. Trello (Project Management)  
 
-*(Paste your Trello board screenshot here later)*  
-
 Suggested format:  
-![Trello Board](planning/trello.png)  
+![Trello Board](screenshots/trello.png)  
 
 We organised tasks into:  
 - To Do  
 - In Progress  
 - Done  
-
-Example tasks:  
-- Set up Express server  
-- Create Supabase database  
-- Build front-end form  
-- Implement CRUD  
-- Style with CSS  
-- Deploy to Render  
 
 ---
 
@@ -251,20 +241,8 @@ We used a Supabase Postgres table called **events**.
 
 ![SQL Query](screenshots/sql-query.png)
 
-| Column Name | Type | Description |
-|-------------|------|-------------|
-| id | INT (PK) | Unique event ID |
-| event_name | TEXT | Name of event |
-| location | TEXT | Venue address |
-| event_date | DATE | Event date |
-| start_time | TIME | Start time |
-| end_time | TIME | End time |
-| description | TEXT | Event details |
-| attending_users | TEXT | Comma-separated user IDs |
-
 ### SQL Schema  
 
-```sql
 CREATE TABLE events (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     event_name TEXT NOT NULL,
