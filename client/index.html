@@ -9,63 +9,55 @@
     <title>Community Events Hub</title>
   </head>
   <body>
-    <h1>Community Events Hub</h1>
-    <h2>Create, join, and manage community events</h2>
+    <div id="heading">
+      <h1>Community Events Hub</h1>
+      <h2>Create, join, and manage community events</h2>
+    </div>
 
-    <form id="form">
-      <label for="event_name">Event Name</label>
-      <input 
-        id="event_name" 
-        name="event_name" 
-        type="text"
-        placeholder="e.g. Community Tech Meetup"
-      />
+    <div id="forms">
+      <h2>Add Event</h2>
+      <form id="form">
+        <label for="event_name">Event Name</label>
+        <input
+          id="event_name"
+          name="event_name"
+          type="text"
+          placeholder="e.g. Community Tech Meetup"
+        />
 
-      <label for="location">Location</label>
-      <input 
-        id="location" 
-        name="location" 
-        type="text"
-        placeholder="e.g. British Library, London"
-      />
+        <label for="location">Location</label>
+        <input
+          id="location"
+          name="location"
+          type="text"
+          placeholder="e.g. British Library, London"
+        />
 
-      <label for="event_date">Event Date</label>
-      <input 
-        id="event_date" 
-        name="event_date" 
-        type="date"
-      />
+        <label for="event_date">Event Date</label>
+        <input id="event_date" name="event_date" type="date" />
 
-      <label for="start_time">Start Time</label>
-      <input 
-        id="start_time" 
-        name="start_time" 
-        type="time"
-      />
+        <label for="start_time">Start Time</label>
+        <input id="start_time" name="start_time" type="time" />
 
-      <label for="end_time">End Time</label>
-      <input 
-        id="end_time" 
-        name="end_time" 
-        type="time"
-      />
+        <label for="end_time">End Time</label>
+        <input id="end_time" name="end_time" type="time" />
 
-      <label for="description">Description</label>
-      <textarea 
-        id="description" 
-        name="description"
-        placeholder="e.g. Evening of tech talks, networking, and snacks. Everyone is welcome!"
-      ></textarea>
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="e.g. Evening of tech talks, networking, and snacks. Everyone is welcome!"
+        ></textarea>
 
-      <button type="submit">Enter the Event</button>
-    </form>
+        <button type="submit">Enter the Event</button>
+      </form>
+    </div>
+    <div id="events">
+      <h2>Upcoming Events</h2>
+      <div id="upcoming"></div>
 
-
-    <h2>Upcoming Events</h2>
-    <div id="upcoming"></div>
-
-    <h2>Past Events</h2>
-    <div id="past"></div>
-
+      <h2>Past Events</h2>
+      <div id="past"></div>
+    </div>
   </body>
 </html>
