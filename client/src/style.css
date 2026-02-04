@@ -4,31 +4,57 @@
 
 body {
   font-family: system-ui, Arial, sans-serif;
-  background-color:#fff6e5;      
-  color: #2b2b2b;
+  background-color: rgb(3, 3, 61);
+  color: white;
   margin: 0;
   padding: 1rem;
 }
+#events h2 {
+  text-align: center;
+}
+
+#events {
+  flex: 1;
+}
+
+#forms h2 {
+  margin: 0;
+  text-align: center;
+  padding-top: 0;
+  padding-bottom: 10px;
+}
+#forms {
+  padding-top: 70px;
+}
 
 #app {
-  max-width: 800px;
+  max-width: none;
   margin: 0 auto;
   display: grid;
   gap: 1rem;
 }
 
 /* Title */
-h1 {
+#heading {
+  background-color: white;
+  color: rgb(124, 121, 165);
+  padding: 1rem;
+  margin: -1rem -1rem -1rem -1rem;
+  font-family: cooper black;
+  -webkit-text-stroke: 1px rgb(3, 3, 61);
+}
+#heading h1 {
+  padding-top: 10px;
   text-align: center;
   margin-bottom: 1.2rem;
-  color: #7c2d12;               
-  font-size: 2rem;
+  font-size: 4rem;
   letter-spacing: 0.5px;
 }
 
-h2 {
-  text-align:center; 
-  font-size:1rem;
+#heading h2 {
+  text-align: center;
+  color: rgb(3, 3, 61);
+  font-size: 2rem;
 }
 
 /* Form styling */
@@ -37,10 +63,7 @@ form {
   padding: 1rem;
   border-radius: 10px;
   margin-bottom: 1.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(3, 3, 61, 0.8);
   border: 1px solid #fde68a;
 }
 
@@ -57,15 +80,15 @@ form textarea {
 
 form textarea {
   height: 140px;
-  resize: none;      
-  overflow-y: scroll;  
+  resize: none;
+  overflow-y: scroll;
   line-height: 1.4;
 }
 
 form button {
   width: 100%;
   padding: 0.6rem;
-  background: #7c2d12;           
+  background: rgb(3, 3, 61);
   color: white;
   border: none;
   border-radius: 6px;
@@ -74,17 +97,19 @@ form button {
 }
 
 form button:hover {
-  background: #5f1f0a;
+  background: rgb(1, 1, 38);
 }
 
 /* Event card */
 .event-card {
-  background: #ffffff;
+  background: white;
   padding: 12px;
   border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-left: 6px solid #fbbf24;
+  box-shadow: 0 2px 5px rgba(148, 133, 133, 0.756);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border-left: 6px solid rgb(249, 164, 178);
 }
 
 .event-card:hover {
@@ -94,7 +119,7 @@ form button:hover {
 /* text inside event */
 .event-card h3 {
   margin-top: 0;
-  color: #7c2d12;
+  color: rgb(3, 3, 61);
 }
 
 .event-card p {
@@ -104,7 +129,8 @@ form button:hover {
 
 /* Buttons */
 .event-card button {
-  margin-right: 0.4rem;
+  width: 50%;
+  margin-bottom: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
   border-radius: 8px;
@@ -115,17 +141,17 @@ form button:hover {
 
 /* Button colours */
 .edit-btn {
-  background: #0d9488;           /* amber */
+  background: rgb(3, 3, 61); /* amber */
   color: white;
 }
 
 .attend-btn {
-  background: #7c3aed;           /* green */
+  background: #086b30d4; /* green */
   color: white;
 }
 
 .delete-btn {
-  background: #dc2626;           /* red */
+  background: #dc2626; /* red */
   color: white;
 }
 
@@ -133,14 +159,14 @@ form button:hover {
 [id^="status-"] {
   margin-top: 6px;
   font-size: 0.9rem;
-  color: #065f46;                /* dark green */
+  color: #065f46; /* dark green */
 }
 
 label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
-  color: #7c2d12;
+  color: rgb(3, 3, 61);
 }
 
 .event-card .attendees {
@@ -150,8 +176,8 @@ label {
 
 .attendee-badge {
   display: inline-block;
-  background: #fff7ed;      
-  color: #7c2d12;           
+  background: #fff7ed;
+  color: #7c2d12;
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 0.85rem;
@@ -161,18 +187,22 @@ label {
 
 #upcoming,
 #past {
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+#upcoming {
+  display: grid;
+}
+#upcoming .event-card {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-#upcoming .event-card,
 #past .event-card {
   width: 100%;
   box-sizing: border-box;
-  border-bottom: 2px solid #e2e8f0;   
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
 }
 
 /* Remove line after last card */
@@ -181,24 +211,35 @@ label {
   border-bottom: none;
 }
 
-
-
-
-
 /* Mobile view */
 @media (max-width: 800px) {
-  body {
-    background-color: #1c1917;   /* very dark navy */
-    color: #fafaf9;
-    padding: 0.5rem;
+  #heading {
+    background-color: rgb(215, 210, 210);
+    color: rgb(3, 3, 61);
+    padding: 1rem;
+    margin: -1rem -2rem -1rem -1rem;
+    font-family: cooper black;
+  }
+  #heading h1 {
+    margin-inline: auto;
+    font-size: 2rem;
+  }
+  #heading h2 {
+    margin-inline: auto;
+    font-size: 1rem;
+  }
+  #forms {
+    width: 100%;
+    margin: 0 auto;
   }
 
-    /* Keep upcoming & past the SAME width as the form on mobile */
+  /* Keep upcoming & past the SAME width as the form on mobile */
   #upcoming,
   #past {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    grid-template-columns: 1fr;
   }
 
   /* Make event cards match the form width on mobile */
@@ -207,33 +248,44 @@ label {
     width: 100%;
     box-sizing: border-box;
   }
+}
 
-  h1 {
-    color: #fde68a;              /* soft light blue */
+@media (max-width: 800px) {
+  #heading {
+    background-color: white;
+    color: rgb(124, 121, 165);
+    padding: 1rem;
+    margin: -1rem -1rem -1rem -1rem;
+    font-family: cooper black;
+    -webkit-text-stroke: 1px rgb(3, 3, 61);
+  }
+  #heading h1 {
+    margin-inline: auto;
+    font-size: 2rem;
+  }
+  #heading h2 {
+    margin-inline: auto;
+    color: rgb(3, 3, 61);
+    font-size: 1rem;
+  }
+  #forms {
+    width: 100%;
+    margin: 0 auto;
   }
 
-  .event-card {
-    background-color: #292524;
-    border-left: 6px solid #f59e0b;
+  /* Keep upcoming & past the SAME width as the form on mobile */
+  #upcoming,
+  #past {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: 1fr;
   }
 
-  .event-card p {
-    color: #e7e5e4;
-  }
-
-  form {
-    background-color: #292524;
-    border: 1px solid #f59e0b;
-  }
-
-  form input,
-  form textarea {
-    background: #1c1917;
-    color: #e7e5e4;
-    border-color: #f59e0b;
-  }
-
-  label {
-    color: #fde68a;
+  /* Make event cards match the form width on mobile */
+  #upcoming .event-card,
+  #past .event-card {
+    width: 100%;
+    box-sizing: border-box;
   }
 }

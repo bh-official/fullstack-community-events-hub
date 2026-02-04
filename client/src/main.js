@@ -2,14 +2,10 @@ const upcomingDiv = document.getElementById("upcoming");
 const pastDiv = document.getElementById("past");
 const statusPrefix = "status-";
 
-
 const form = document.getElementById("form");
-const baseURL = "https://fullstack-community-events-hub-server-iqu8.onrender.com";
+const baseURL = "https://fullstack-community-events-hub.onrender.com";
 
 let editingID = null;
-
-
-
 
 // Load events when page opens
 
@@ -19,13 +15,12 @@ async function loadEvents() {
 
   const today = new Date().toISOString().split("T")[0];
 
-  const upcoming = events.filter(e => e.event_date >= today);
-  const past = events.filter(e => e.event_date < today);
+  const upcoming = events.filter((e) => e.event_date >= today);
+  const past = events.filter((e) => e.event_date < today);
 
   renderEvents(upcoming, upcomingDiv, "upcoming");
   renderEvents(past, pastDiv, "past");
 }
-
 
 function renderEvents(events, container, type) {
   container.innerHTML = "";
@@ -42,29 +37,33 @@ function renderEvents(events, container, type) {
 
     const attendingList = event.attending_users || "";
     const count = attendingList
-      ? attendingList.split(",").map(s => s.trim()).filter(Boolean).length
+      ? attendingList
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean).length
       : 0;
 
     attendees.textContent =
-      type === "past"
-      ? `👥 ${count} attended`
-      : `👥 ${count} attending`;
+      type === "past" ? `👥 ${count} attended` : `👥 ${count} attending`;
 
     const location = document.createElement("p");
     location.textContent = event.location;
 
     const date = document.createElement("p");
-    const formattedDate = new Date(event.event_date).toLocaleDateString("en-GB", {
-      weekday: "short",
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+    const formattedDate = new Date(event.event_date).toLocaleDateString(
+      "en-GB",
+      {
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      },
+    );
     date.textContent = formattedDate;
 
     const time = document.createElement("p");
     const formatTime = (t) => {
-      return t.slice(0, 5);   // keeps only HH:MM and removes :SS
+      return t.slice(0, 5); // keeps only HH:MM and removes :SS
     };
 
     time.textContent = `${formatTime(event.start_time)} - ${formatTime(event.end_time)}`;
@@ -90,14 +89,7 @@ function renderEvents(events, container, type) {
     const status = document.createElement("p");
     status.id = `${statusPrefix}${event.id}`;
 
-    div.append(
-      title,
-      attendees,
-      location,
-      date,
-      time,
-      description
-    );
+    div.append(title, attendees, location, date, time, description);
 
     // Only show Edit + Attend for upcoming events
     if (type === "upcoming") {
@@ -114,7 +106,6 @@ function renderEvents(events, container, type) {
 }
 
 function attachEventListeners() {
-
   // Attend button
   document.querySelectorAll(".attend-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
@@ -124,9 +115,10 @@ function attachEventListeners() {
         method: "POST",
       });
       const data = await res.json();
-      document.getElementById(`${statusPrefix}${eventId}`).textContent = data.message;
+      document.getElementById(`${statusPrefix}${eventId}`).textContent =
+        data.message;
 
-      loadEvents(); 
+      loadEvents();
     });
   });
 
@@ -142,8 +134,9 @@ function attachEventListeners() {
 
       document.getElementById("event_name").value = event.event_name;
       document.getElementById("location").value = event.location;
-      document.getElementById("event_date").value =
-        new Date(event.event_date).toISOString().split("T")[0];
+      document.getElementById("event_date").value = new Date(event.event_date)
+        .toISOString()
+        .split("T")[0];
       document.getElementById("start_time").value = event.start_time;
       document.getElementById("end_time").value = event.end_time;
       document.getElementById("description").value = event.description;
@@ -168,7 +161,6 @@ function attachEventListeners() {
   });
 }
 
-
 // Submit handler
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -181,7 +173,6 @@ form.addEventListener("submit", async (e) => {
     end_time: document.getElementById("end_time").value,
     description: document.getElementById("description").value,
   };
-
 
   if (editingID) {
     // Update existing event
@@ -203,7 +194,6 @@ form.addEventListener("submit", async (e) => {
   form.reset();
   form.querySelector("button").textContent = "Enter the Event";
   loadEvents();
-
 });
 
 // Calling this each time when page loads
