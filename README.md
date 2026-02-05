@@ -295,11 +295,11 @@ create .gitignore
 
 - Server deployed on **Render Web Service**  
 
-🔗 **Live Server URL:** https://fullstack-community-events-hub-server.onrender.com  
+🔗 **Live Server URL:** https://fullstack-community-events-hub.onrender.com  
 
 - Client deployed as **Render Static Site**  
 
-🔗 **Live Client URL:** https://fullstack-community-events-hub-client.onrender.com  
+🔗 **Live Client URL:** https://fullstack-community-events-hub-1.onrender.com  
 
 ---
 
